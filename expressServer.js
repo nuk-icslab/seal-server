@@ -7,25 +7,35 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const { OpenApiValidator } = require("express-openapi-validator");
+const { Provider } = require("oidc-provider");
+const morgan = require("morgan");
+const helmet = require("helmet");
 const logger = require("./logger");
-const config = require("./config");
+const { http_config, oapi_config, oidc_config } = require("./config");
 
 class ExpressServer {
-  constructor(port, openApiYaml) {
+  constructor(port) {
     this.port = port;
     this.app = express();
-    this.openApiPath = openApiYaml;
     try {
-      this.schema = jsYaml.safeLoad(fs.readFileSync(openApiYaml));
+      this.schema = jsYaml.safeLoad(fs.readFileSync(oapi_config.OPENAPI_YAML));
     } catch (e) {
       logger.error("failed to start Express Server", e.message);
     }
-    this.setupMiddleware();
   }
 
   setupMiddleware() {
     // this.setupAllowedMedia();
+    this.app.use(morgan("tiny"));
     this.app.use(cors());
+    this.app.use(helmet());
+
+    const oidc = new Provider(`${http_config.PATH}:${this.port}`, oidc_config);
+    oidc.use(async (ctx, next) => {
+      logger.info(`[SEAL][IM-S] ${ctx.method} ${ctx.originalUrl}`);
+      await next();
+    });
+    this.app.use("/oidc", oidc.callback());
     this.app.use(bodyParser.json({ limit: "14MB" }));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
@@ -33,9 +43,10 @@ class ExpressServer {
   }
 
   launch() {
+    this.setupMiddleware();
     new OpenApiValidator({
-      apiSpec: this.openApiPath,
-      operationHandlers: path.join(config.PROJECT_DIR),
+      apiSpec: oapi_config.OPENAPI_YAML,
+      operationHandlers: path.join(oapi_config.PROJECT_DIR),
     })
       .install(this.app)
       .catch((e) => console.log(e))
