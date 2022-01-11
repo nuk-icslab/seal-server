@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 const Service = require("./Service");
+const VALGroupDocument = require("../models/VALGroupDocument");
+const logger = require("../logger");
 
 /**
  * Retrieves VAL group documents satisfying filter criteria
@@ -11,12 +13,14 @@ const Service = require("./Service");
 const group_documentsGET = ({ valGroupId, valServiceId }) =>
   new Promise(async (resolve, reject) => {
     try {
-      console.log(`group_documentsGET Called${valGroupId} ${valServiceId}`);
+      const result = await VALGroupDocument.find({ valGroupId });
       resolve(
-        Service.successResponse({
-          valGroupId,
-          valServiceId,
-        })
+        Service.successResponse(
+          result.map((d) => ({
+            valGroupId: d.valGroupId,
+            members: d.members,
+          }))
+        )
       );
     } catch (e) {
       reject(
@@ -33,9 +37,10 @@ const group_documentsGET = ({ valGroupId, valServiceId }) =>
 const group_documentsGroupDocIdDELETE = ({ groupDocId }) =>
   new Promise(async (resolve, reject) => {
     try {
+      await VALGroupDocument.deleteOne({ valGroupId: groupDocId });
       resolve(
         Service.successResponse({
-          groupDocId,
+          valGroupId: groupDocId,
         })
       );
     } catch (e) {
@@ -59,12 +64,14 @@ const group_documentsGroupDocIdGET = ({
 }) =>
   new Promise(async (resolve, reject) => {
     try {
+      const result = await VALGroupDocument.find({ valGroupId: groupDocId });
       resolve(
-        Service.successResponse({
-          groupDocId,
-          groupMembers,
-          groupConfiguration,
-        })
+        Service.successResponse(
+          result.map((d) => ({
+            valGroupId: d.valGroupId,
+            members: d.members,
+          }))
+        )
       );
     } catch (e) {
       reject(
@@ -79,15 +86,14 @@ const group_documentsGroupDocIdGET = ({
  * vALGroupDocument VALGroupDocument VAL group document to be updated in Group management server.
  * returns VALGroupDocument
  * */
-const group_documentsGroupDocIdPUT = ({ groupDocId, vALGroupDocument }) =>
+const group_documentsGroupDocIdPUT = ({ groupDocId, valGroupDocument }) =>
   new Promise(async (resolve, reject) => {
     try {
-      resolve(
-        Service.successResponse({
-          groupDocId,
-          vALGroupDocument,
-        })
+      const result = await VALGroupDocument.updateOne(
+        { valGroupId: groupDocId },
+        { members: valGroupDocument["members"] }
       );
+      resolve(Service.successResponse({ modified: result.modifiedCount }));
     } catch (e) {
       reject(
         Service.rejectResponse(e.message || "Invalid input", e.status || 405)
@@ -100,12 +106,14 @@ const group_documentsGroupDocIdPUT = ({ groupDocId, vALGroupDocument }) =>
  * vALGroupDocument VALGroupDocument
  * returns VALGroupDocument
  * */
-const group_documentsPOST = ({ vALGroupDocument }) =>
+const group_documentsPOST = ({ valGroupDocument }) =>
   new Promise(async (resolve, reject) => {
     try {
+      const new_group = new VALGroupDocument(valGroupDocument);
+      await new_group.save();
       resolve(
         Service.successResponse({
-          vALGroupDocument,
+          valGroupDocument,
         })
       );
     } catch (e) {

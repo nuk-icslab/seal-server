@@ -29,10 +29,10 @@ npm start
 
 - ✔️: Implemented; ❌: Not implemented
 - Identity Management
-  - OpenID Connect 1.0
+  - ✔️ OpenID Connect 1.0
 - Group Management
-  - ❌ `GET {apiRoot}/ss-gm/v1/group-documents`
-  - ❌ `POST {apiRoot}/ss-gm/v1/group-documents`
-  - ❌ `GET {apiRoot}/ss-gm/v1/group-documents/{groupDocId}`
-  - ❌ `PUT {apiRoot}/ss-gm/v1/group-documents/{groupDocId}`
-  - ❌ `DELETE {apiRoot}/ss-gm/v1/group-documents/{groupDocId}`
+  - ✔️ `GET {apiRoot}/ss-gm/v1/group-documents`
+  - ✔️ `POST {apiRoot}/ss-gm/v1/group-documents`
+  - ✔️ `GET {apiRoot}/ss-gm/v1/group-documents/{groupDocId}`
+  - ✔️ `PUT {apiRoot}/ss-gm/v1/group-documents/{groupDocId}`
+  - ✔️ `DELETE {apiRoot}/ss-gm/v1/group-documents/{groupDocId}`

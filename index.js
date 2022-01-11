@@ -1,9 +1,11 @@
-const { http_config } = require("./config");
+const { http_config, db_config } = require("./config");
 const logger = require("./logger");
 const ExpressServer = require("./expressServer");
+const mongoose = require("mongoose");
 
 const launchServer = async () => {
   try {
+    await mongoose.connect(db_config.conn);
     this.expressServer = new ExpressServer(http_config.PORT);
     this.expressServer.launch();
     logger.info("[Express] Server is running");

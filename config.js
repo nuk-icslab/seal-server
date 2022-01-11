@@ -5,6 +5,10 @@ const http_config = {
   PATH: "http://localhost",
 };
 
+const db_config = {
+  conn: "mongodb://localhost:27017/seal",
+};
+
 const oapi_config = {
   ROOT_DIR: __dirname,
   BASE_VERSION: "/ss-gm/v1",
@@ -88,6 +92,7 @@ const oidc_config = {
 
 module.exports = {
   http_config,
+  db_config,
   oapi_config,
   oidc_config,
 };

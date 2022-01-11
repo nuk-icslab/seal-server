@@ -21,6 +21,7 @@
     "express-openapi-validator": "^3.9.1",
     "helmet": "^5.0.1",
     "js-yaml": "^3.3.0",
+    "mongoose": "^6.1.6",
     "morgan": "^1.10.0",
     "oidc-provider": "^7.10.6",
     "ono": "^5.0.1",
