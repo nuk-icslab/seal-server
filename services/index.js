@@ -1,5 +1,5 @@
-const DefaultService = require('./DefaultService');
+const GroupManagementService = require("./GroupManagementService");
 
 module.exports = {
-  DefaultService,
+  GroupManagementService,
 };

@@ -6,28 +6,47 @@
  * parameters are extracted and sent to the service, and where response is handled.
  */
 
-const Controller = require('./Controller');
-const service = require('../services/DefaultService');
+const Controller = require("./Controller");
+const gm_service = require("../services/GroupManagementService");
 const group_documentsGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.group_documentsGET);
+  await Controller.handleRequest(
+    request,
+    response,
+    gm_service.group_documentsGET
+  );
 };
 
 const group_documentsGroupDocIdDELETE = async (request, response) => {
-  await Controller.handleRequest(request, response, service.group_documentsGroupDocIdDELETE);
+  await Controller.handleRequest(
+    request,
+    response,
+    gm_service.group_documentsGroupDocIdDELETE
+  );
 };
 
 const group_documentsGroupDocIdGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.group_documentsGroupDocIdGET);
+  await Controller.handleRequest(
+    request,
+    response,
+    gm_service.group_documentsGroupDocIdGET
+  );
 };
 
 const group_documentsGroupDocIdPUT = async (request, response) => {
-  await Controller.handleRequest(request, response, service.group_documentsGroupDocIdPUT);
+  await Controller.handleRequest(
+    request,
+    response,
+    gm_service.group_documentsGroupDocIdPUT
+  );
 };
 
 const group_documentsPOST = async (request, response) => {
-  await Controller.handleRequest(request, response, service.group_documentsPOST);
+  await Controller.handleRequest(
+    request,
+    response,
+    gm_service.group_documentsPOST
+  );
 };
-
 
 module.exports = {
   group_documentsGET,

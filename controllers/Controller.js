@@ -116,6 +116,8 @@ class Controller {
 
   static async handleRequest(request, response, serviceOperation) {
     try {
+      // [TODO] Decide the module that the request belongs to
+      logger.info(`[SEAL][GM-S] ${request.method} ${request.originalUrl}`);
       const serviceResponse = await serviceOperation(
         this.collectRequestParams(request)
       );

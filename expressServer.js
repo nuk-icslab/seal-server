@@ -25,8 +25,7 @@ class ExpressServer {
   }
 
   setupMiddleware() {
-    // this.setupAllowedMedia();
-    this.app.use(morgan("tiny"));
+    //this.app.use(morgan("tiny"));
     this.app.use(cors());
     this.app.use(helmet());
 
@@ -61,14 +60,14 @@ class ExpressServer {
         });
 
         http.createServer(this.app).listen(this.port);
-        logger.info(`Listening on port ${this.port}`);
+        logger.info(`[Express] Listening on port ${this.port}`);
       });
   }
 
   async close() {
     if (this.server !== undefined) {
       await this.server.close();
-      logger.info(`Server on port ${this.port} shut down`);
+      logger.info(`[Express] Server on port ${this.port} shut down`);
     }
   }
 }
