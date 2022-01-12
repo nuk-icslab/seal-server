@@ -31,8 +31,7 @@ const oidc_config = {
       grant_types: ["authorization_code"],
       redirect_uris: [
         "http://localhost:8080/auth/callback",
-        "http://localhost:9000/static/callback.html",
-        "http://localhost:9000",
+        "http://localhost:9000/callback.html",
         "https://oidcdebugger.com/debug",
       ],
       response_types: ["code"],

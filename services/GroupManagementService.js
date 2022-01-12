@@ -38,11 +38,7 @@ const group_documentsGroupDocIdDELETE = ({ groupDocId }) =>
   new Promise(async (resolve, reject) => {
     try {
       await VALGroupDocument.deleteOne({ valGroupId: groupDocId });
-      resolve(
-        Service.successResponse({
-          valGroupId: groupDocId,
-        })
-      );
+      resolve(Service.successResponse("", 204));
     } catch (e) {
       reject(
         Service.rejectResponse(e.message || "Invalid input", e.status || 405)
@@ -64,14 +60,12 @@ const group_documentsGroupDocIdGET = ({
 }) =>
   new Promise(async (resolve, reject) => {
     try {
-      const result = await VALGroupDocument.find({ valGroupId: groupDocId });
+      const result = await VALGroupDocument.findOne({ valGroupId: groupDocId });
       resolve(
-        Service.successResponse(
-          result.map((d) => ({
-            valGroupId: d.valGroupId,
-            members: d.members,
-          }))
-        )
+        Service.successResponse({
+          valGroupId: result.valGroupId,
+          members: result.members,
+        })
       );
     } catch (e) {
       reject(
@@ -89,11 +83,16 @@ const group_documentsGroupDocIdGET = ({
 const group_documentsGroupDocIdPUT = ({ groupDocId, valGroupDocument }) =>
   new Promise(async (resolve, reject) => {
     try {
-      const result = await VALGroupDocument.updateOne(
+      const result = await VALGroupDocument.findOneAndUpdate(
         { valGroupId: groupDocId },
         { members: valGroupDocument["members"] }
       );
-      resolve(Service.successResponse({ modified: result.modifiedCount }));
+      resolve(
+        Service.successResponse({
+          valGroupId: result.valGroupId,
+          members: result.members,
+        })
+      );
     } catch (e) {
       reject(
         Service.rejectResponse(e.message || "Invalid input", e.status || 405)
@@ -113,7 +112,7 @@ const group_documentsPOST = ({ valGroupDocument }) =>
       await new_group.save();
       resolve(
         Service.successResponse({
-          valGroupDocument,
+          ...valGroupDocument,
         })
       );
     } catch (e) {
