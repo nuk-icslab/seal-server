@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 
 const launchServer = async () => {
   try {
-    await mongoose.connect(db_config.conn);
-    this.expressServer = new ExpressServer(http_config.PORT);
+    await mongoose.connect(db_config.URI);
+    this.expressServer = new ExpressServer(http_config);
     this.expressServer.launch();
     logger.info("[Express] Server is running");
   } catch (error) {

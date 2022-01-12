@@ -9,12 +9,15 @@
 
 ## Installation
 
-1. Please install [Node.js](https://nodejs.org/en/) first
+1. Please install [Node.js](https://nodejs.org/en/) and [OpenSSL](https://www.openssl.org/) first
 2. Execute the following commands
 
 ```bash
 cd seal_server
 npm install
+mkdir certs
+cd certs
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -nodes -sha256 -days 365
 ```
 
 ## Usage

@@ -1,3 +1,4 @@
+const https = require("https");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -11,11 +12,11 @@ const { Provider } = require("oidc-provider");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const logger = require("./logger");
-const { http_config, oapi_config, oidc_config } = require("./config");
+const { oapi_config, oidc_config } = require("./config");
 
 class ExpressServer {
-  constructor(port) {
-    this.port = port;
+  constructor(http_config) {
+    this.http_config = http_config;
     this.app = express();
     try {
       this.schema = jsYaml.safeLoad(fs.readFileSync(oapi_config.OPENAPI_YAML));
@@ -29,7 +30,7 @@ class ExpressServer {
     this.app.use(cors());
     this.app.use(helmet());
 
-    const oidc = new Provider(`${http_config.PATH}:${this.port}`, oidc_config);
+    const oidc = new Provider(`${this.http_config.URI}`, oidc_config);
     oidc.use(async (ctx, next) => {
       logger.info(`[SEAL][IM-S] ${ctx.method} ${ctx.originalUrl}`);
       await next();
@@ -39,6 +40,9 @@ class ExpressServer {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
+    this.app.get("/", (req, res) => {
+      res.json({ succeed: true, description: "Welcome to the SEAL Server" });
+    });
   }
 
   launch() {
@@ -59,15 +63,28 @@ class ExpressServer {
           });
         });
 
-        http.createServer(this.app).listen(this.port);
-        logger.info(`[Express] Listening on port ${this.port}`);
+        let server = {};
+        if (this.http_config.PROTO === "https") {
+          const key = fs.readFileSync(this.http_config.KEY_PATH);
+          const cert = fs.readFileSync(this.http_config.CERT_PATH);
+          const https_credentials = { key, cert };
+          server = https.createServer(https_credentials, this.app);
+        } else {
+          server = http.createServer(this.app);
+        }
+
+        server.listen(this.http_config.PORT, this.http_config.IP_ADDR);
+        logger.info(
+          "[Express] Listening on " +
+            `${this.http_config.PROTO}://${this.http_config.IP_ADDR}:${this.http_config.PORT}`
+        );
       });
   }
 
   async close() {
     if (this.server !== undefined) {
       await this.server.close();
-      logger.info(`[Express] Server on port ${this.port} shut down`);
+      logger.info(`[Express] Server on ${this.http_config.URI} shut down`);
     }
   }
 }

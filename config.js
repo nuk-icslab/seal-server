@@ -1,13 +1,21 @@
 const path = require("path");
 
 const http_config = {
-  PORT: 8080,
-  PATH: "http://localhost",
+  PROTO: "https",
+  HOSTNAME: "seal.5gsvc",
+  IP_ADDR: "127.0.0.1",
+  PORT: 29549,
+  KEY_PATH: "certs/key.pem",
+  CERT_PATH: "certs/cert.pem",
 };
+http_config.URI = `${http_config.PROTO}://${http_config.HOSTNAME}:${http_config.PORT}`;
 
 const db_config = {
-  conn: "mongodb://localhost:27017/seal",
+  DB_NAME: "seal",
+  HOSTNAME: "localhost",
+  PORT: 27017,
 };
+db_config.URI = `mongodb://${db_config.HOSTNAME}:${db_config.PORT}/${db_config.DB_NAME}`;
 
 const oapi_config = {
   ROOT_DIR: __dirname,
@@ -21,7 +29,7 @@ oapi_config.OPENAPI_YAML = path.join(
   "api",
   "openapi.yaml"
 );
-oapi_config.FULL_PATH = `${http_config.PATH}:${http_config.PORT}/${oapi_config.BASE_VERSION}`;
+oapi_config.FULL_PATH = `${http_config.URI}/${oapi_config.BASE_VERSION}`;
 
 const oidc_config = {
   clients: [
@@ -34,6 +42,7 @@ const oidc_config = {
         "http://localhost:9000/callback.html",
         "https://oidcdebugger.com/debug",
       ],
+      post_logout_redirect_uris: ["http://localhost:9000/index.html"],
       response_types: ["code"],
     },
   ],
