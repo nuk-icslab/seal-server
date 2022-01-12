@@ -2,6 +2,7 @@
 const Service = require("./Service");
 const VALGroupDocument = require("../models/VALGroupDocument");
 const logger = require("../logger");
+const axios = require("axios");
 
 /**
  * Retrieves VAL group documents satisfying filter criteria
@@ -122,10 +123,24 @@ const group_documentsPOST = ({ valGroupDocument }) =>
     }
   });
 
+const group_getByUserId = async (req, res) => {
+  logger.info(`[SEAL][GM-S] ${req.method} ${req.originalUrl}`);
+  try {
+    if (req.params.user_id === undefined) throw {};
+    const result = await VALGroupDocument.find({
+      "members.valUserId": req.params.user_id,
+    });
+    res.send(result);
+  } catch (e) {
+    res.send(e.message || "Invalid input", e.status || 405);
+  }
+};
+
 module.exports = {
   group_documentsGET,
   group_documentsGroupDocIdDELETE,
   group_documentsGroupDocIdGET,
   group_documentsGroupDocIdPUT,
   group_documentsPOST,
+  group_getByUserId,
 };

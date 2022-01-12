@@ -13,6 +13,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const logger = require("./logger");
 const { oapi_config, oidc_config } = require("./config");
+const { group_getByUserId } = require("./services/GroupManagementService");
 
 class ExpressServer {
   constructor(http_config) {
@@ -43,6 +44,9 @@ class ExpressServer {
     this.app.get("/", (req, res) => {
       res.json({ succeed: true, description: "Welcome to the SEAL Server" });
     });
+
+    // Hard coded special endpoint
+    this.app.get("/gm/:user_id", group_getByUserId);
   }
 
   launch() {
