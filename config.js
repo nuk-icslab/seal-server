@@ -40,9 +40,13 @@ const oidc_config = {
       redirect_uris: [
         "http://localhost:8080/auth/callback",
         "http://localhost:9000/callback.html",
+        "http://app.5gsvc:9000/callback.html",
         "https://oidcdebugger.com/debug",
       ],
-      post_logout_redirect_uris: ["http://localhost:9000/index.html"],
+      post_logout_redirect_uris: [
+        "http://localhost:9000/index.html",
+        "http://app.5gsvc:9000/index.html",
+      ],
       response_types: ["code"],
     },
   ],
