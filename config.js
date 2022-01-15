@@ -7,15 +7,16 @@ const http_config = {
   PORT: 29549,
   KEY_PATH: "certs/key.pem",
   CERT_PATH: "certs/cert.pem",
+  KEYLOG_PATH: "./tls-keylog.txt",
 };
 http_config.URI = `${http_config.PROTO}://${http_config.HOSTNAME}:${http_config.PORT}`;
 
 const db_config = {
   DB_NAME: "seal",
-  HOSTNAME: "localhost",
+  IP_ADDR: "127.0.0.1",
   PORT: 27017,
 };
-db_config.URI = `mongodb://${db_config.HOSTNAME}:${db_config.PORT}/${db_config.DB_NAME}`;
+db_config.URI = `mongodb://${db_config.IP_ADDR}:${db_config.PORT}/${db_config.DB_NAME}`;
 
 const oapi_config = {
   ROOT_DIR: __dirname,

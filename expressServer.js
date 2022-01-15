@@ -54,6 +54,7 @@ class ExpressServer {
     new OpenApiValidator({
       apiSpec: oapi_config.OPENAPI_YAML,
       operationHandlers: path.join(oapi_config.PROJECT_DIR),
+      validateRequests: false,
     })
       .install(this.app)
       .catch((e) => console.log(e))
@@ -72,6 +73,12 @@ class ExpressServer {
           const key = fs.readFileSync(this.http_config.KEY_PATH);
           const cert = fs.readFileSync(this.http_config.CERT_PATH);
           const https_credentials = { key, cert };
+          https.globalAgent.on("keylog", (line, tlsSocket) => {
+            console.log(line);
+            fs.appendFileSync(this.http_config.KEYLOG_PATH, line, {
+              mode: 0o600,
+            });
+          });
           server = https.createServer(https_credentials, this.app);
         } else {
           server = http.createServer(this.app);
