@@ -5,8 +5,8 @@ const http_config = {
   HOSTNAME: "seal.5gsvc",
   IP_ADDR: "127.0.0.1",
   PORT: 29549,
-  KEY_PATH: "certs/key.pem",
-  CERT_PATH: "certs/cert.pem",
+  KEY_PATH: "certs/seal.key",
+  CERT_PATH: "certs/seal.crt",
   KEYLOG_PATH: "./tls-keylog.txt",
 };
 http_config.URI = `${http_config.PROTO}://${http_config.HOSTNAME}:${http_config.PORT}`;
