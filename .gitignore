@@ -5,3 +5,6 @@ node_modules/
 # Certifications for development
 certs
 tls-keylog.txt
+
+# Virtual enviroments
+venv
