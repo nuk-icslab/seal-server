@@ -1,7 +1,7 @@
 {
-  "name": "ss-groupmanagement",
-  "version": "1.1.0-alpha.4",
-  "description": "API for SEAL Group management. © 2021, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC). All rights reserved. ",
+  "name": "seal-server",
+  "version": "1.0.0",
+  "description": "The server of 3GPP Service Enabler Architecture Layer (SEAL)",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
