@@ -3,7 +3,7 @@ const path = require("path");
 const http_config = {
   PROTO: "https",
   HOSTNAME: "seal.5gsvc",
-  IP_ADDR: "127.0.0.1",
+  IP_ADDR: "0.0.0.0",
   PORT: 29549,
   KEY_PATH: "certs/seal.key",
   CERT_PATH: "certs/seal.crt",
