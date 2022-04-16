@@ -20,6 +20,17 @@ cd certs
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -nodes -sha256 -days 365
 ```
 
+3. Link with OpenCAPIF AEF module
+
+```bash
+# Clone OpenCAPIF from https://github.com/nuk-icslab/opencapif
+cd path/to/opencapif/aef/src
+npm link
+
+cd path/to/seal_server
+npm link capif-aef --save
+```
+
 ## Usage
 
 ```bash
