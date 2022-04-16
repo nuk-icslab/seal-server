@@ -12,6 +12,7 @@ const { Provider } = require("oidc-provider");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const logger = require("./logger");
+const { capifAef } = require("capif-aef");
 const { oapi_config, oidc_config } = require("./config");
 const { group_getByUserId } = require("./services/GroupManagementService");
 
@@ -30,6 +31,7 @@ class ExpressServer {
     //this.app.use(morgan("tiny"));
     this.app.use(cors());
     this.app.use(helmet());
+    this.app.use(capifAef("aef-seal"));
 
     const oidc = new Provider(`${this.http_config.URI}`, oidc_config);
     oidc.use(async (ctx, next) => {
@@ -87,7 +89,7 @@ class ExpressServer {
         server.listen(this.http_config.PORT, this.http_config.IP_ADDR);
         logger.info(
           "[Express] Listening on " +
-            `${this.http_config.PROTO}://${this.http_config.IP_ADDR}:${this.http_config.PORT}`
+          `${this.http_config.PROTO}://${this.http_config.IP_ADDR}:${this.http_config.PORT}`
         );
       });
   }

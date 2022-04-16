@@ -17,6 +17,7 @@ const launchServer = async () => {
     logger.info("[Express] Server is running");
   } catch (error) {
     logger.error("[Express] Server failure ", error.message, error.stack);
+    logger.error(error);
     await this.expressServer.close();
   }
 };
