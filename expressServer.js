@@ -15,6 +15,10 @@ const logger = require("./logger");
 const { capifAef } = require("capif-aef");
 const { oapi_config, oidc_config } = require("./config");
 const { group_getByUserId } = require("./services/GroupManagementService");
+const {
+  uploadLocation,
+  getLocation,
+} = require("./services/LocationManagementService");
 
 class ExpressServer {
   constructor(http_config) {
@@ -49,6 +53,8 @@ class ExpressServer {
 
     // Hard coded special endpoint
     this.app.get("/custom-gm/v1/groups/:user_id", group_getByUserId);
+    this.app.post("/lm/location/:user_id", uploadLocation);
+    this.app.get("/lm/location/:user_id", getLocation);
   }
 
   launch() {
@@ -89,7 +95,7 @@ class ExpressServer {
         server.listen(this.http_config.PORT, this.http_config.IP_ADDR);
         logger.info(
           "[Express] Listening on " +
-          `${this.http_config.PROTO}://${this.http_config.IP_ADDR}:${this.http_config.PORT}`
+            `${this.http_config.PROTO}://${this.http_config.IP_ADDR}:${this.http_config.PORT}`
         );
       });
   }
