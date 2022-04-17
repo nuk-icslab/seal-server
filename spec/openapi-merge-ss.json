@@ -1,0 +1,77 @@
+{
+  "inputs": [
+    {
+      "inputFile": "./TS29549_SS_Events.yaml",
+      "pathModification": {
+        "prepend": "/ss-events/v1"
+      },
+      "dispute": {
+        "prefix": "events"
+      }
+    },
+    {
+      "inputFile": "./TS29549_SS_GroupManagement.yaml",
+      "pathModification": {
+        "prepend": "/ss-gm/v1"
+      },
+      "dispute": {
+        "prefix": "groupManagement"
+      }
+    },
+    {
+      "inputFile": "./TS29549_SS_KeyInfoRetrieval.yaml",
+      "pathModification": {
+        "prepend": "/ss-kir/v1"
+      },
+      "dispute": {
+        "prefix": "keyInfoRetrieval"
+      }
+    },
+    {
+      "inputFile": "./TS29549_SS_LocationAreaInfoRetrieval.yaml",
+      "pathModification": {
+        "prepend": "/ss-lair/v1"
+      },
+      "dispute": {
+        "prefix": "locationAreaInfoRetrieval"
+      }
+    },
+    {
+      "inputFile": "./TS29549_SS_LocationReporting.yaml",
+      "pathModification": {
+        "prepend": "/ss-lr/v1"
+      },
+      "dispute": {
+        "prefix": "locationReporting"
+      }
+    },
+    {
+      "inputFile": "./TS29549_SS_NetworkResourceAdaptation.yaml",
+      "pathModification": {
+        "prepend": "/ss-nra/v1"
+      },
+      "dispute": {
+        "prefix": "networkResourceAdaptation"
+      }
+    },
+    {
+      "inputFile": "./TS29549_SS_NetworkSliceAdaptation.yaml",
+      "pathModification": {
+        "prepend": "/ss-nsa/v1"
+      },
+      "dispute": {
+        "prefix": "networkSliceAdaptation.yaml"
+      }
+    },
+    {
+      "inputFile": "./TS29549_SS_UserProfileRetrieval.yaml",
+      "pathModification": {
+        "prepend": "/ss-upr/v1"
+      },
+      "dispute": {
+        "prefix": "userProfileRetrieval"
+      }
+    }
+  ],
+  "output": "./output.yaml"
+}

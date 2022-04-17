@@ -8,3 +8,8 @@ tls-keylog.txt
 
 # Virtual enviroments
 venv
+
+# OpenAPI-generator related files
+openapitools.json
+build
+lib
