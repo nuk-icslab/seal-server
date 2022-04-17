@@ -14,6 +14,10 @@ const helmet = require("helmet");
 const logger = require("./logger");
 const { oapi_config, oidc_config } = require("./config");
 const { group_getByUserId } = require("./services/GroupManagementService");
+const {
+  uploadLocation,
+  getLocation,
+} = require("./services/LocationManagementService");
 
 class ExpressServer {
   constructor(http_config) {
@@ -29,7 +33,7 @@ class ExpressServer {
   setupMiddleware() {
     //this.app.use(morgan("tiny"));
     this.app.use(cors());
-    this.app.use(helmet());
+    //this.app.use(helmet());
 
     const oidc = new Provider(`${this.http_config.URI}`, oidc_config);
     oidc.use(async (ctx, next) => {
@@ -47,6 +51,8 @@ class ExpressServer {
 
     // Hard coded special endpoint
     this.app.get("/custom-gm/groups/:user_id", group_getByUserId);
+    this.app.post("/lm/location/:user_id", uploadLocation);
+    this.app.get("/lm/location/:user_id", getLocation);
   }
 
   launch() {
