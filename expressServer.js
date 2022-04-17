@@ -48,7 +48,7 @@ class ExpressServer {
     });
 
     // Hard coded special endpoint
-    this.app.get("/custom-gm/groups/:user_id", group_getByUserId);
+    this.app.get("/custom-gm/v1/groups/:user_id", group_getByUserId);
   }
 
   launch() {
