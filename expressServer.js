@@ -52,9 +52,9 @@ class ExpressServer {
     });
 
     // Hard coded special endpoint
-    this.app.get("/custom-gm/v1/groups/:user_id", group_getByUserId);
-    this.app.post("/lm/location/:user_id", uploadLocation);
-    this.app.get("/lm/location/:user_id", getLocation);
+    this.app.get("/ss-gmuu/v1/:user_id/group-list-fetch", group_getByUserId);
+    this.app.post("/ss-lm/location/:user_id", uploadLocation);
+    this.app.get("/ss-lm/location/:user_id", getLocation);
   }
 
   launch() {
