@@ -42,7 +42,7 @@ class ExpressServer {
       logger.info(`[SEAL][IM-S] ${ctx.method} ${ctx.originalUrl}`);
       await next();
     });
-    this.app.use("/oidc", oidc.callback());
+    this.app.use("/oidc/v1", oidc.callback());
     this.app.use(bodyParser.json({ limit: "14MB" }));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
@@ -53,8 +53,8 @@ class ExpressServer {
 
     // Hard coded special endpoint
     this.app.get("/ss-gmuu/v1/:user_id/group-list-fetch", group_getByUserId);
-    this.app.post("/ss-lm/location/:user_id", uploadLocation);
-    this.app.get("/ss-lm/location/:user_id", getLocation);
+    this.app.post("/ss-lm/v1/location/:user_id", uploadLocation);
+    this.app.get("/ss-lm/v1/location/:user_id", getLocation);
   }
 
   launch() {
